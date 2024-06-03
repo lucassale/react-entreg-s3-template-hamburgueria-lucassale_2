@@ -1,29 +1,37 @@
+
+
 import { useState } from "react";
 import Logo from "../../assets/Logo.svg";
 import { MdSearch, MdShoppingCart } from "react-icons/md";
+import "./Header.scss";
 
-export const Header = () => {
-   const [value, setValue] = useState("");
+export const Header = ({ cartList, setSearchTerm, openCartModal }) => {
+  const [value, setValue] = useState("");
 
-   return (
-      <header>
-         <img src={Logo} alt="Logo Kenzie Burguer" />
-         <div>
-            <button>
-                <MdShoppingCart size={21} />
-                <span>0</span>
-            </button>
-            <form>
-               <input
-                  type="text"
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
-               />
-               <button type="submit">
-                 <MdSearch size={21} />
-               </button>
-            </form>
-         </div>
-      </header>
-   );
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearchTerm(value);
+  };
+
+  return (
+    <header className="header">
+      <img src={Logo} alt="Logo Kenzie Burguer" />
+      <div>
+        <button onClick={openCartModal}>
+          <MdShoppingCart size={21} />
+          <span>{cartList.length}</span>
+        </button>
+        <form onSubmit={handleSearch}>
+          <input
+            type="text"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <button type="submit">
+            <MdSearch size={21} />
+          </button>
+        </form>
+      </div>
+    </header>
+  );
 };
